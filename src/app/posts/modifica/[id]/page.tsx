@@ -85,30 +85,18 @@ export default function Modifica() {
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />
-        <Select onValueChange={setAuthorId}>
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Selezione un autore" />
+
+        <Select>
+          <SelectTrigger>
+            <SelectValue placeholder="Theme" />
           </SelectTrigger>
           <SelectContent>
-            {authors && authors.length > 0 ? (
-              authors.map((author) => (
-                <SelectItem key={author.id} value={author.id.toString()}>
-                  {author.name}
-                </SelectItem>
-              ))
-            ) : (
-              <SelectItem value="0">Nessun autore disponibile</SelectItem>
-            )}
+            <SelectItem value="light">Light</SelectItem>
+            <SelectItem value="dark">Dark</SelectItem>
+            <SelectItem value="system">System</SelectItem>
           </SelectContent>
         </Select>
-        <div className="flex items-center space-x-2">
-          <Switch
-            id="published"
-            checked={published}
-            onCheckedChange={setPublished}
-          />
-          <label htmlFor="published">Pubblicato</label>
-        </div>
+
         <Button type="submit">Modifica post</Button>
       </form>
     </div>

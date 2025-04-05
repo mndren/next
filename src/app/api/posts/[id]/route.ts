@@ -6,7 +6,7 @@ export async function GET(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const { id } = params;
+  const id = params.id;
 
   if (!id) {
     return NextResponse.json({ error: "ID non fornito" }, { status: 400 });
