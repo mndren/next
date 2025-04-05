@@ -3,7 +3,7 @@ import { prisma } from "../../../../lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
-  let users: User[];
+  let users: User[] = [];
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");
   if (id) {

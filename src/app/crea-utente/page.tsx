@@ -16,7 +16,10 @@ export default function CreaUtente() {
       body: JSON.stringify({ name, email }),
     });
     const data = await res.json();
-    console.log(data);
+    if (!res.ok) {
+      console.error("Errore durante la creazione dell'utente", data);
+      return;
+    }
     router.push("/utenti");
   };
 
