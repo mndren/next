@@ -22,6 +22,15 @@ export default function CreaUtente() {
 
   return (
     <div className="max-w-md mx-auto mt-10">
+      <div className="mb-4">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => router.push("/utenti")}
+        >
+          Torna alla lista
+        </Button>
+      </div>
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input
           placeholder="Nome"

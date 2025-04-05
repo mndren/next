@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { User } from "@prisma/client";
 
 export default function ModificaUtente() {
   const router = useRouter();
@@ -15,19 +16,19 @@ export default function ModificaUtente() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await fetch(`/api/users/${userId}`);
-      const data = await res.json();
-      setName(data.name);
-      setEmail(data.email);
+      const res = await fetch(`/api/users?id=${userId}`);
+      const data = (await res.json()) as User[];
+
+      setName(data[0].name ?? "");
+      setEmail(data[0].email ?? "");
     };
     if (userId) fetchUser();
   }, [userId]);
 
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await fetch(`/api/users/${userId}`, {
+    const res = await fetch(`/api/users?id=${userId}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email }),
     });
     if (res.ok) {
@@ -39,6 +40,15 @@ export default function ModificaUtente() {
 
   return (
     <div className="max-w-md mx-auto mt-10">
+      <div className="mb-4">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => router.push("/utenti")}
+        >
+          Torna alla lista
+        </Button>
+      </div>
       <form onSubmit={handleUpdate} className="space-y-4">
         <Input
           placeholder="Nome"

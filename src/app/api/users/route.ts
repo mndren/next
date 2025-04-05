@@ -1,29 +1,36 @@
+import { User } from "@prisma/client";
 import { prisma } from "../../../../lib/prisma";
 import { NextResponse } from "next/server";
 
-export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-  const user = await prisma.user.findUnique({
-    where: { id: parseInt(params.id) },
-  });
-
-  if (!user) {
-    return NextResponse.json({ error: "Utente non trovato" }, { status: 404 });
+export async function GET(req: Request) {
+  let users: User[];
+  const { searchParams } = new URL(req.url);
+  const id = searchParams.get("id");
+  if (id) {
+    users = await prisma.user.findMany({
+      where: { id: parseInt(id) },
+    });
+  } else {
+    users = await prisma.user.findMany();
   }
-
-  return NextResponse.json(user);
+  if (!users) {
+    return NextResponse.json(
+      { error: "Nessun utente trovato" },
+      { status: 404 }
+    );
+  }
+  return NextResponse.json(users);
 }
 
-export async function PUT(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(req: Request) {
+  const { searchParams } = new URL(req.url);
+  const id = searchParams.get("id");
+  if (!id) {
+    return NextResponse.json({ error: "ID non fornito" }, { status: 400 });
+  }
   const { name, email } = await req.json();
-
   const user = await prisma.user.update({
-    where: { id: parseInt(params.id) },
+    where: { id: parseInt(id) },
     data: { name, email },
   });
 
@@ -40,12 +47,15 @@ export async function POST(req: Request) {
   return NextResponse.json(user);
 }
 
-export async function DELETE(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(req: Request) {
+  const { searchParams } = new URL(req.url);
+  const id = searchParams.get("id");
+  if (!id) {
+    return NextResponse.json({ error: "ID non fornito" }, { status: 400 });
+  }
+
   await prisma.user.delete({
-    where: { id: parseInt(params.id) },
+    where: { id: parseInt(id) },
   });
 
   return NextResponse.json({ success: true });
