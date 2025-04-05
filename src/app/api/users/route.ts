@@ -6,6 +6,7 @@ export async function GET(req: Request) {
   let users: User[] = [];
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");
+
   if (id) {
     users = await prisma.user.findMany({
       where: { id: parseInt(id) },

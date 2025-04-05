@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-export default function CreaUtente() {
+export default function Crea() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const router = useRouter();

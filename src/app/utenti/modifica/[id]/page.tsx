@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { User } from "@prisma/client";
 
-export default function ModificaUtente() {
+export default function Modifica() {
   const router = useRouter();
   const params = useParams();
   const userId = params.id;

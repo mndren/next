@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { User } from "@prisma/client";
 
-export default function Utenti() {
+export default function UtentiList() {
   const router = useRouter();
   const [users, setUsers] = useState<User[]>([]);
 
@@ -41,7 +41,7 @@ export default function Utenti() {
       <h1 className="text-2xl font-bold mb-4">Lista utenti</h1>
 
       <div className="mb-4">
-        <Button onClick={() => router.push("/crea-utente")}>Crea utente</Button>
+        <Button onClick={() => router.push("utenti/crea")}>Crea utente</Button>
       </div>
 
       <Table>
@@ -62,7 +62,7 @@ export default function Utenti() {
               <TableCell className="space-x-2">
                 <Button
                   variant="outline"
-                  onClick={() => router.push(`/modifica-utente/${user.id}`)}
+                  onClick={() => router.push(`utenti/modifica/${user.id}`)}
                 >
                   Modifica
                 </Button>
