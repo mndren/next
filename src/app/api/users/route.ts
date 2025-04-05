@@ -28,7 +28,7 @@ export async function PUT(req: Request) {
   if (!id) {
     return NextResponse.json({ error: "ID non fornito" }, { status: 400 });
   }
-  const { name, email } = await req.json();
+  const { name, email } = (await req.json()) as User;
   const user = await prisma.user.update({
     where: { id: parseInt(id) },
     data: { name, email },
@@ -38,7 +38,7 @@ export async function PUT(req: Request) {
 }
 
 export async function POST(req: Request) {
-  const { name, email } = await req.json();
+  const { name, email } = (await req.json()) as User;
 
   const user = await prisma.user.create({
     data: { name, email },
