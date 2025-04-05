@@ -37,7 +37,7 @@ export default function Utenti() {
   }, []);
 
   const deleteUser = async (id: number) => {
-    await fetch(`/api/users/${id}`, { method: "DELETE" });
+    await fetch(`/api/users?id=${id}`, { method: "DELETE" });
     setUsers((prev) => prev.filter((user) => user.id !== id));
   };
 
