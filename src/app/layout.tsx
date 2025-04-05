@@ -37,6 +37,9 @@ export default function RootLayout({
             <Link href="/utenti" className="hover:text-gray-400">
               Utenti
             </Link>
+            <Link href="/posts" className="hover:text-gray-400">
+              Posts
+            </Link>
           </div>
         </nav>
         <main className="container p-4">{children}</main>
