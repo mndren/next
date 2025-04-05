@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "fix": "git add . && git commit -m '** fix vari **' && git push -f"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
