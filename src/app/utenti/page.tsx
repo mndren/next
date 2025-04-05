@@ -11,12 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-
-type User = {
-  id: number;
-  name: string;
-  email: string;
-};
+import { User } from "@prisma/client";
 
 export default function Utenti() {
   const router = useRouter();
