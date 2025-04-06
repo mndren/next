@@ -40,10 +40,32 @@ export async function PUT(req: Request) {
 
 export async function POST(req: Request) {
   const { name, email } = (await req.json()) as User;
+  let user: User | null = null;
+  if (!name || !email) {
+    return NextResponse.json(
+      { error: "Nome o email non forniti" },
+      { status: 400 }
+    );
+  }
 
-  const user = await prisma.user.create({
-    data: { name, email },
+  const existingUser = await prisma.user.findUnique({
+    where: { email },
   });
+  if (existingUser) {
+    return NextResponse.json({ error: "Email già in uso" }, { status: 400 });
+  }
+
+  try {
+    user = await prisma.user.create({
+      data: { name, email },
+    });
+  } catch (error) {
+    console.error("Error creating user:", error);
+    return NextResponse.json(
+      { error: "Errore durante la creazione dell'utente" },
+      { status: 500 }
+    );
+  }
 
   return NextResponse.json(user);
 }

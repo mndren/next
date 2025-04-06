@@ -86,14 +86,19 @@ export default function Modifica() {
           onChange={(e) => setContent(e.target.value)}
         />
 
-        <Select>
-          <SelectTrigger>
-            <SelectValue placeholder="Theme" />
-          </SelectTrigger>
+        <Select
+          onValueChange={(value) => setAuthorId(value)}
+          defaultValue={authorId}
+          value={authorId}
+        >
+          <SelectTrigger className="w-full"></SelectTrigger>
+          <SelectValue placeholder="Seleziona autore" />
           <SelectContent>
-            <SelectItem value="light">Light</SelectItem>
-            <SelectItem value="dark">Dark</SelectItem>
-            <SelectItem value="system">System</SelectItem>
+            {authors.map((author) => (
+              <SelectItem key={author.id} value={author.id.toString()}>
+                {author.name}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
 

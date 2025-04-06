@@ -2,11 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../../lib/prisma";
 import { Post } from "@prisma/client";
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  const id = params.id;
+export async function GET(req: NextRequest, { params }) {
+  const { id } = await params;
 
   if (!id) {
     return NextResponse.json({ error: "ID non fornito" }, { status: 400 });
@@ -15,9 +12,7 @@ export async function GET(
     where: { id: parseInt(id) },
     include: { author: true },
   });
-  if (!post) {
-    return NextResponse.json({ error: "Post non trovato" }, { status: 404 });
-  }
+
   return NextResponse.json(post);
 }
 

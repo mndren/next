@@ -42,7 +42,7 @@ export default function PostList() {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Lista utenti</h1>
+      <h1 className="text-2xl font-bold mb-4">Lista post</h1>
 
       <div className="mb-4">
         <Button onClick={() => router.push("posts/crea")}>Crea post</Button>
