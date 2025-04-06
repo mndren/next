@@ -74,34 +74,42 @@ export default function Dipendenti() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {dipendenti.map((dipendente) => (
-            <TableRow key={dipendente.id}>
-              <TableCell className="space-x-2">
-                <Button
-                  variant="outline"
-                  onClick={() =>
-                    router.push(`dipendenti/modifica/${dipendente.id}`)
-                  }
-                >
-                  <PenIcon />
-                </Button>
-                <Button
-                  variant="destructive"
-                  onClick={() => deleteDipendente(dipendente.id)}
-                >
-                  <TrashIcon />
-                </Button>
+          {dipendenti.length === 0 && (
+            <TableRow>
+              <TableCell colSpan={8} className="text-center">
+                Nessun dipendente trovato
               </TableCell>
-              <TableCell>{dipendente.id}</TableCell>
-              <TableCell>{dipendente.nome}</TableCell>
-              <TableCell>{dipendente.cognome}</TableCell>
-              <TableCell>{dipendente.email}</TableCell>
-              <TableCell>{dipendente.telefono}</TableCell>
-              <TableCell>{dipendente.ruolo}</TableCell>
-              <TableCell>{dipendente.stipendio}</TableCell>
-              <TableCell>{dipendente.attivo ? "Si" : "No"}</TableCell>
             </TableRow>
-          ))}
+          )}
+          {dipendenti.length > 0 &&
+            dipendenti.map((dipendente) => (
+              <TableRow key={dipendente.id}>
+                <TableCell className="space-x-2">
+                  <Button
+                    variant="outline"
+                    onClick={() =>
+                      router.push(`dipendenti/modifica/${dipendente.id}`)
+                    }
+                  >
+                    <PenIcon />
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    onClick={() => deleteDipendente(dipendente.id)}
+                  >
+                    <TrashIcon />
+                  </Button>
+                </TableCell>
+                <TableCell>{dipendente.id}</TableCell>
+                <TableCell>{dipendente.nome}</TableCell>
+                <TableCell>{dipendente.cognome}</TableCell>
+                <TableCell>{dipendente.email}</TableCell>
+                <TableCell>{dipendente.telefono}</TableCell>
+                <TableCell>{dipendente.ruolo}</TableCell>
+                <TableCell>{dipendente.stipendio}</TableCell>
+                <TableCell>{dipendente.attivo ? "Si" : "No"}</TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </div>

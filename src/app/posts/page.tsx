@@ -60,30 +60,38 @@ export default function PostList() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {posts.map((post) => (
-            <TableRow key={post.id}>
-              <TableCell>{post.id}</TableCell>
-              <TableCell>{post?.author?.name}</TableCell>
-              {/* Assuming you have a way to get the author's name */}
-              <TableCell>{post.title}</TableCell>
-              <TableCell>{post.content}</TableCell>
-              <TableCell>{post.published ? "Si" : "No"}</TableCell>
-              <TableCell className="space-x-2">
-                <Button
-                  variant="outline"
-                  onClick={() => router.push(`posts/modifica/${post.id}`)}
-                >
-                  Modifica
-                </Button>
-                <Button
-                  variant="destructive"
-                  onClick={() => deletePost(post.id)}
-                >
-                  Elimina
-                </Button>
+          {posts.length === 0 && (
+            <TableRow>
+              <TableCell colSpan={6} className="text-center">
+                Nessun post trovato
               </TableCell>
             </TableRow>
-          ))}
+          )}
+          {posts.length > 0 &&
+            posts.map((post) => (
+              <TableRow key={post.id}>
+                <TableCell>{post.id}</TableCell>
+                <TableCell>{post?.author?.name}</TableCell>
+                {/* Assuming you have a way to get the author's name */}
+                <TableCell>{post.title}</TableCell>
+                <TableCell>{post.content}</TableCell>
+                <TableCell>{post.published ? "Si" : "No"}</TableCell>
+                <TableCell className="space-x-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => router.push(`posts/modifica/${post.id}`)}
+                  >
+                    Modifica
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    onClick={() => deletePost(post.id)}
+                  >
+                    Elimina
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </div>

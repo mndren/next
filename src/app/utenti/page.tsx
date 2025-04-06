@@ -54,27 +54,35 @@ export default function UtentiList() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {users.map((user) => (
-            <TableRow key={user.id}>
-              <TableCell>{user.id}</TableCell>
-              <TableCell>{user.name}</TableCell>
-              <TableCell>{user.email}</TableCell>
-              <TableCell className="space-x-2">
-                <Button
-                  variant="outline"
-                  onClick={() => router.push(`utenti/modifica/${user.id}`)}
-                >
-                  Modifica
-                </Button>
-                <Button
-                  variant="destructive"
-                  onClick={() => deleteUser(user.id)}
-                >
-                  Elimina
-                </Button>
+          {users.length === 0 && (
+            <TableRow>
+              <TableCell colSpan={4} className="text-center">
+                Nessun utente trovato
               </TableCell>
             </TableRow>
-          ))}
+          )}
+          {users.length > 0 &&
+            users.map((user) => (
+              <TableRow key={user.id}>
+                <TableCell>{user.id}</TableCell>
+                <TableCell>{user.name}</TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell className="space-x-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => router.push(`utenti/modifica/${user.id}`)}
+                  >
+                    Modifica
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    onClick={() => deleteUser(user.id)}
+                  >
+                    Elimina
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </div>
