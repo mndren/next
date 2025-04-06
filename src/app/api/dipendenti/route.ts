@@ -9,25 +9,17 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: Request) {
-  const {
-    nome,
-    cognome,
-    email,
-    telefono,
-    stipendio,
-    attivo,
-    dataAssunzione,
-    ruolo,
-  } = (await req.json()) as Dipendenti;
+  const { nome, cognome, email, telefono, stipendio, attivo, ruolo } =
+    (await req.json()) as Dipendenti;
 
   let dipendente: Dipendenti | null = null;
 
-  //   const existingUser = await prisma.dipendenti.findUnique({
-  //     where: { email },
-  //   });
-  //   if (existingUser) {
-  //     return NextResponse.json({ error: "Email già in uso" }, { status: 400 });
-  //   }
+  const existingUser = await prisma.dipendenti.findUnique({
+    where: { email },
+  });
+  if (existingUser) {
+    return NextResponse.json({ error: "Email già in uso" }, { status: 400 });
+  }
 
   try {
     dipendente = await prisma.dipendenti.create({
