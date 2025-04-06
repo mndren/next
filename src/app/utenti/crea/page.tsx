@@ -24,7 +24,7 @@ export default function Crea() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10">
+    <div className="max-w-md mt-14">
       <div className="mb-4">
         <Button
           type="button"

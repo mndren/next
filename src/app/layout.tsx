@@ -1,7 +1,19 @@
+"use client";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
+import AppSidebar from "@/components/app-sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import React from "react";
+import { usePathname } from "next/navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,7 +25,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
+const metadata: Metadata = {
   title: "Test con Next/Prisma/Shadcn",
   description: "Test con Next/Prisma/Shadcn",
 };
@@ -23,26 +35,54 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+  const segments = pathname.split("/").filter(Boolean);
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <nav className="flex items-center justify-between p-4 bg-gray-800 text-white">
-          <div className="text-lg font-bold">Test con Next/Prisma/Shadcn</div>
-          <div className="space-x-4">
-            <Link href="/" className="hover:text-gray-400">
-              Home
-            </Link>
-            <Link href="/utenti" className="hover:text-gray-400">
-              Utenti
-            </Link>
-            <Link href="/posts" className="hover:text-gray-400">
-              Posts
-            </Link>
-          </div>
-        </nav>
-        <main className="container p-4">{children}</main>
+        <div className="flex min-h-screen">
+          <SidebarProvider>
+            <AppSidebar />
+            <main className="flex-1 p-6">
+              <>
+                <Breadcrumb className="ml-4">
+                  <BreadcrumbList>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    {segments.map((segment, index) => {
+                      const href = "/" + segments.slice(0, index + 1).join("/");
+                      const isLast = index === segments.length - 1;
+                      return (
+                        <React.Fragment key={href}>
+                          <BreadcrumbSeparator />
+                          <BreadcrumbItem>
+                            {isLast ? (
+                              <span className="text-muted-foreground capitalize">
+                                {segment}
+                              </span>
+                            ) : (
+                              <BreadcrumbLink
+                                href={href}
+                                className="capitalize"
+                              >
+                                {segment}
+                              </BreadcrumbLink>
+                            )}
+                          </BreadcrumbItem>
+                        </React.Fragment>
+                      );
+                    })}
+                  </BreadcrumbList>
+                </Breadcrumb>
+                {children}
+              </>
+            </main>
+          </SidebarProvider>
+        </div>
       </body>
     </html>
   );
