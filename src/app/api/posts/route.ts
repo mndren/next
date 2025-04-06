@@ -7,6 +7,7 @@ export async function GET() {
   try {
     posts = await prisma.post.findMany({
       include: { author: true },
+      orderBy: { id: "asc" },
     });
   } catch (error) {
     console.error("Errore durante il recupero dei post:", error);

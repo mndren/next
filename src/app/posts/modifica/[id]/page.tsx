@@ -12,7 +12,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@radix-ui/react-select";
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 
 export default function Modifica() {
@@ -101,7 +102,13 @@ export default function Modifica() {
             ))}
           </SelectContent>
         </Select>
-
+        <div className="flex items-center">
+          <Label className="mr-2">Pubblicato</Label>
+          <Switch
+            checked={published}
+            onCheckedChange={(checked) => setPublished(checked)}
+          />
+        </div>
         <Button type="submit">Modifica post</Button>
       </form>
     </div>

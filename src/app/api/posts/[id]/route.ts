@@ -20,15 +20,20 @@ export async function PUT(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  let author_id: number | undefined;
   const { id } = params;
 
   if (!id) {
     return NextResponse.json({ error: "ID non fornito" }, { status: 400 });
   }
-  const { title, content, published } = (await req.json()) as Post;
+  const { title, content, published, authorId } = await req.json();
+  if (authorId && typeof authorId !== "number") {
+    author_id = parseInt(authorId);
+  }
+
   const post = await prisma.post.update({
     where: { id: parseInt(id) },
-    data: { title, content, published },
+    data: { title, content, published, authorId: author_id },
   });
   return NextResponse.json(post);
 }
