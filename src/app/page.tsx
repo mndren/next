@@ -3,13 +3,6 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
-import {
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 
 export default function HomePage() {
   const [userCount, setUserCount] = useState<number | null>(null);
@@ -37,7 +30,7 @@ export default function HomePage() {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
-      <div className="grid grid-cols-2 gap-4 mt-6">
+      <div className="grid grid-cols-4 gap-4 mt-6">
         <Card>
           <CardHeader>
             <CardTitle>Utenti Totali</CardTitle>
