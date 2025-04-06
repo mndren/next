@@ -23,3 +23,31 @@ model Post {
   authorId  Int
   author    User    @relation(fields: [authorId], references: [id])
 }
+
+model Dipendenti {
+  id          Int      @id @default(autoincrement())
+  nome        String
+  cognome     String
+  email       String   @unique
+  telefono    String
+  stipendio   Float
+  ruolo       String
+  attivo      Boolean  @default(true)
+}
+
+model Mansione {
+  id          Int      @id @default(autoincrement())
+  nome        String
+  descrizione String
+  stipendio   Float
+  attivo      Boolean  @default(true)
+}
+model Progetto {
+  id          Int      @id @default(autoincrement())
+  nome        String
+  descrizione String
+  dataInizio  DateTime
+  dataFine    DateTime
+  budget      Float
+  attivo      Boolean  @default(true)
+}
