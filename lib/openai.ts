@@ -1,9 +1,7 @@
 import OpenAI from "openai";
 
-// Utilizza variabile d'ambiente invece della chiave hardcoded
 const OPEN_AI_KEY = process.env.OPENAI_API_KEY;
 
-// Verifica che la chiave API sia disponibile
 if (!OPEN_AI_KEY) {
   console.warn(
     "Attenzione: OPENAI_API_KEY non è impostata nelle variabili d'ambiente"
