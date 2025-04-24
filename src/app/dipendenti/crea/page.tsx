@@ -5,6 +5,22 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Calendar } from "@/components/ui/calendar";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Dialog } from "@/components/ui/dialog";
+import { AppDialogMansioni } from "@/components/app-dialog-mansioni";
 
 export default function Crea() {
   const [nome, setNome] = useState("");
@@ -15,6 +31,11 @@ export default function Crea() {
   const [stipendio, setStipendio] = useState("");
   const [ruolo, setRuolo] = useState("");
   const [attivo, setAttivo] = useState(true);
+  const [roles, setRoles] = useState<string[]>([
+    "Programmatore",
+    "Grafico",
+    "Amministrativo",
+  ]);
 
   const router = useRouter();
 
@@ -95,14 +116,24 @@ export default function Crea() {
           className="w-full"
           required
         />
-        <Input
-          placeholder="Ruolo*"
-          value={ruolo}
-          type="text"
-          onChange={(e) => setRuolo(e.target.value)}
-          className="w-full"
-          required
-        />
+        <Select onValueChange={(value) => setRuolo(value)}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Selezione un ruolo*" />
+          </SelectTrigger>
+          <SelectContent>
+            {roles && roles.length > 0 ? (
+              roles.map((role) => (
+                <SelectItem key={role} value={role}>
+                  {role}
+                </SelectItem>
+              ))
+            ) : (
+              <SelectItem value="0">Nessun ruolo disponibile</SelectItem>
+            )}
+          </SelectContent>
+        </Select>
+        <AppDialogMansioni ruolo={ruolo} />
+
         <Input
           placeholder="Data Assunzione*"
           type="date"
