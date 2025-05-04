@@ -4,7 +4,7 @@ import Link from "next/link";
 import { prisma } from "../../../../../lib/prisma";
 import { updateUser } from "../../actions";
 
-export async function Modifica({ params }: { params: { id: string } }) {
+export default async function Modifica({ params }: { params: { id: string } }) {
   const user = await prisma.user.findUnique({
     where: {
       id: parseInt(params.id),
@@ -22,10 +22,7 @@ export async function Modifica({ params }: { params: { id: string } }) {
           <Link href="/utenti">Torna alla lista</Link>
         </Button>
       </div>
-      <form
-        action={(f) => updateUser(f, parseInt(params.id))}
-        className="space-y-4"
-      >
+      <form action={updateUser} className="space-y-4">
         <Input
           placeholder="Nome"
           name="name"
