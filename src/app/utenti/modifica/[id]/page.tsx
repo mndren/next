@@ -1,66 +1,42 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { User } from "@prisma/client";
+import Link from "next/link";
+import { prisma } from "../../../../../lib/prisma";
+import { updateUser } from "../../actions";
 
-export default function Modifica() {
-  const router = useRouter();
-  const params = useParams();
-  const userId = params.id;
+export async function Modifica({ params }: { params: { id: string } }) {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: parseInt(params.id),
+    },
+  });
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const res = await fetch(`/api/users?id=${userId}`);
-      const data = (await res.json()) as User[];
-
-      setName(data[0].name ?? "");
-      setEmail(data[0].email ?? "");
-    };
-    if (userId) fetchUser();
-  }, [userId]);
-
-  const handleUpdate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const res = await fetch(`/api/users?id=${userId}`, {
-      method: "PUT",
-      body: JSON.stringify({ name, email }),
-    });
-    if (res.ok) {
-      router.push("/utenti");
-    } else {
-      console.error("Errore durante l'aggiornamento");
-    }
-  };
+  if (!user) {
+    return <div>Utente non trovato</div>;
+  }
 
   return (
     <div className="max-w-md mx-auto mt-10">
       <div className="mb-4">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() => router.push("/utenti")}
-        >
-          Torna alla lista
+        <Button type="button" variant="outline">
+          <Link href="/utenti">Torna alla lista</Link>
         </Button>
       </div>
-      <form onSubmit={handleUpdate} className="space-y-4">
+      <form
+        action={(f) => updateUser(f, parseInt(params.id))}
+        className="space-y-4"
+      >
         <Input
           placeholder="Nome"
-          value={name}
+          name="name"
+          defaultValue={user.name}
           type="text"
-          onChange={(e) => setName(e.target.value)}
         />
         <Input
           placeholder="Email"
+          name="email"
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          defaultValue={user.email}
         />
         <Button type="submit">Modifica utente</Button>
       </form>

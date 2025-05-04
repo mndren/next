@@ -33,6 +33,7 @@ model Dipendenti {
   stipendio   Float
   ruolo       String
   attivo      Boolean  @default(true)
+  creatoIl    DateTime @default(now())
 }
 
 model Mansione {

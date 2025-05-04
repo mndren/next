@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Table,
   TableBody,
@@ -9,39 +7,21 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { User } from "@prisma/client";
+import { prisma } from "../../../lib/prisma";
+import Link from "next/link";
 
-export default function UtentiList() {
-  const router = useRouter();
-  const [users, setUsers] = useState<User[]>([]);
-
-  useEffect(() => {
-    const getUsers = async () => {
-      try {
-        const res = await fetch("/api/users");
-        const data = await res.json();
-        setUsers(data);
-      } catch (err) {
-        console.error("Errore nel recupero utenti:", err);
-      }
-    };
-
-    getUsers();
-  }, []);
-
-  const deleteUser = async (id: number) => {
-    await fetch(`/api/users?id=${id}`, { method: "DELETE" });
-    setUsers((prev) => prev.filter((user) => user.id !== id));
-  };
+export default async function UtentiList() {
+  const users = await prisma.user.findMany();
 
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Lista utenti</h1>
 
       <div className="mb-4">
-        <Button onClick={() => router.push("utenti/crea")}>Crea utente</Button>
+        <Button>
+          {" "}
+          <Link href={"utenti/crea"}>Crea utente</Link>
+        </Button>
       </div>
 
       <Table>
@@ -68,18 +48,10 @@ export default function UtentiList() {
                 <TableCell>{user.name}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell className="space-x-2">
-                  <Button
-                    variant="outline"
-                    onClick={() => router.push(`utenti/modifica/${user.id}`)}
-                  >
-                    Modifica
+                  <Button variant="outline">
+                    <Link href={`utenti/modifica/${user.id}`}> Modifica</Link>
                   </Button>
-                  <Button
-                    variant="destructive"
-                    onClick={() => deleteUser(user.id)}
-                  >
-                    Elimina
-                  </Button>
+                  <Button variant="destructive">Elimina</Button>
                 </TableCell>
               </TableRow>
             ))}

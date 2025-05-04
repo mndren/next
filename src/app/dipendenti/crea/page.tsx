@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Calendar } from "@/components/ui/calendar";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
@@ -12,14 +11,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Dialog } from "@/components/ui/dialog";
 import { AppDialogMansioni } from "@/components/app-dialog-mansioni";
 
 export default function Crea() {
@@ -65,23 +56,17 @@ export default function Crea() {
   };
 
   return (
-    <div className="max-w-md mt-14">
-      <div className="pl-6">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() => router.push("/dipendenti")}
-        >
-          Torna alla lista
-        </Button>
-      </div>
-      <form onSubmit={handleSubmit} className="space-y-6 p-6 ">
+    <div className="flex flex-col justify-start min-h-screen">
+      <form
+        onSubmit={handleSubmit}
+        className="grid grid-cols-2 gap-4 p-6 w-full"
+      >
         <Input
           placeholder="Nome*"
           value={nome}
           type="text"
           onChange={(e) => setNome(e.target.value)}
-          className="w-full"
+          className="col-span-1"
           required
         />
         <Input
@@ -89,7 +74,7 @@ export default function Crea() {
           value={cognome}
           type="text"
           onChange={(e) => setCognome(e.target.value)}
-          className="w-full"
+          className="col-span-1"
           required
         />
         <Input
@@ -97,7 +82,7 @@ export default function Crea() {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full"
+          className="col-span-1"
           required
         />
         <Input
@@ -105,7 +90,7 @@ export default function Crea() {
           value={telefono}
           type="text"
           onChange={(e) => setTelefono(e.target.value)}
-          className="w-full"
+          className="col-span-1"
           required
         />
         <Input
@@ -113,7 +98,7 @@ export default function Crea() {
           value={stipendio}
           type="number"
           onChange={(e) => setStipendio(e.target.value)}
-          className="w-full"
+          className="col-span-1"
           required
         />
         <Select onValueChange={(value) => setRuolo(value)}>
@@ -132,17 +117,16 @@ export default function Crea() {
             )}
           </SelectContent>
         </Select>
-        <AppDialogMansioni ruolo={ruolo} />
-
+        <AppDialogMansioni ruolo={ruolo} className="col-span-2" />
         <Input
           placeholder="Data Assunzione*"
           type="date"
           value={dataAssunzione}
           onChange={(e) => setDataAssunzione(e.target.value)}
-          className="w-full"
+          className="col-span-1"
           required
         />
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 col-span-2">
           <Checkbox
             id="attivo"
             checked={attivo}
@@ -156,7 +140,7 @@ export default function Crea() {
 
         <Button
           type="submit"
-          className="w-full bg-blue-500 text-white hover:bg-blue-600"
+          className="col-span-2 bg-blue-500 text-white hover:bg-blue-600"
         >
           Crea utente
         </Button>

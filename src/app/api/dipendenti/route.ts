@@ -1,8 +1,8 @@
 import { Dipendenti } from "@prisma/client";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { prisma } from "../../../../lib/prisma";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   let dipendenti: Dipendenti[] = [];
   dipendenti = await prisma.dipendenti.findMany();
   return NextResponse.json(dipendenti);
